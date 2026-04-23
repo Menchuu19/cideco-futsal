@@ -217,23 +217,7 @@ input {
 }
 </style>
 </head>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-
 <script>
-
-const supabase = window.supabase.createClient(
-  "https://lbjeleowvbeyxkuradnb.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxiamVsZW93dmJleXhrdXJhZG5iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyOTQxNzEsImV4cCI6MjA5MTg3MDE3MX0.uIbahQCe4xtDVXTiefkUKMMGSD8kSjnRO8C8u7G-aaA"
-);
-
-let equipoSeleccionado = {
-  arquero: null,
-  cierre: null,
-  ala1: null,
-  ala2: null,
-  pivot: null
-};
 
 function guardarEquipo(){
 
@@ -534,9 +518,16 @@ function elegirJugador(j){
       <div class="nombre">${j.apellido}</div>
     `;
   }
+function guardarEquipo(){
 
-  // 🔥 ESTA LÍNEA ES LA NUEVA
-  equipoSeleccionado[posicionActual] = j;
+  const boton = document.querySelector(".btn-guardar");
+
+  boton.innerHTML = "✅ Equipo confirmado";
+
+  boton.disabled = true;
+
+  boton.style.background = "#22c55e";
+  boton.style.color = "white";
 }
 </script>
 
