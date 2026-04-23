@@ -1,537 +1,386 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CIDECO FUTSAL</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Equipo de la fecha</title>
 
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url("img/fondo-cideco.jpg") no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: white;
+    }
 
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      backdrop-filter: blur(8px);
+      background: rgba(0, 0, 0, 0.6);
+      z-index: -1;
+    }
 
-<style>
-  .torneo {
-  font-size: 14px;
-  color: #22c55e;
-  letter-spacing: 2px;
-  margin-bottom: 5px;
-}
-  .info-partido {
-  margin-bottom: 10px;
-  font-size: 14px;
-  color: #94a3b8;
-}
+    .container {
+      text-align: center;
+      padding: 20px;
+    }
 
-.info-partido p {
-  margin: 2px;
-}
-.area {
-  position: absolute;
-  width: 120px;
-  height: 60px;
-  border: 2px solid rgba(255,255,255,0.3);
-  left: 50%;
-  transform: translateX(-50%);
-  border-radius: 0 0 60px 60px;
-}
+    h1 {
+      margin-bottom: 8px;
+      font-size: 24px;
+    }
 
-.area-top {
-  top: 0;
-  border-top: none;
-}
+    .info-partido {
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: #94a3b8;
+    }
 
-.area-bottom {
-  bottom: 0;
-  transform: translateX(-50%) rotate(180deg);
-}
+    .info-partido p {
+      margin: 2px;
+    }
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
- background: url("img/fondo cideco.jpg") no-repeat center center fixed;
-  background-size: cover;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  color: white;
-}
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  backdrop-filter: blur(8px);
-  background: rgba(0, 0, 0, 0.6);
-  z-index: -1;
-}
-.container {
-  text-align: center;
-}
+    .cancha {
+      position: relative;
+      width: 300px;
+      height: 500px;
+      background: url("img/fondo-cideco.png") no-repeat center;
+      background-size: cover;
+      border-radius: 15px;
+      overflow: hidden;
+      margin: 0 auto;
+    }
 
-h1 {
-  margin-bottom: 10px;
-}
+    .linea {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      height: 1px;
+      background: rgba(255,255,255,0.2);
+    }
 
-.cancha {
-  position: relative;
-  width: 300px;
-  height: 500px;
-  background: url("img/fondo-cideco.png") no-repeat center;
-  background-size: cover;
-  border-radius: 15px;
-  overflow: hidden;
-}
-.foto {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%; /* 👈 lo hace círculo */
-  object-fit: cover;  /* 👈 recorta bien la imagen */
-}
+    .centro {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 80px;
+      height: 80px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+    }
 
-/* línea mitad */
-.linea {
-  position: absolute;
-  top: 50%;
-  width: 100%;
-  height: 1px;
-  background: rgba(255,255,255,0.2);
-}
+    .area {
+      position: absolute;
+      width: 120px;
+      height: 60px;
+      border: 2px solid rgba(255,255,255,0.3);
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 0 0 60px 60px;
+    }
 
-/* círculo central */
-.centro {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 80px;
-  height: 80px;
-  border: 2px solid rgba(255,255,255,0.3);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-}
+    .area-top {
+      top: 0;
+      border-top: none;
+    }
 
-/* jugador */
-.jugador
- {
-  position: absolute;
-  width: 65px;
-  height: 65px;
-  border-radius: 50%;
-  overflow: visible; /* CLAVE */
-}
-.jugador {
-  width: 65px;
-  height: 65px;
-  border-radius: 50%;
-  background: rgba(200, 200, 200, 0.15); /* gris transparente */
-  border: 2px solid rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(4px); /* efecto vidrio (muy pro) */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  cursor: pointer;
-  transition: 0.2s;
-}
+    .area-bottom {
+      bottom: 0;
+      transform: translateX(-50%) rotate(180deg);
+    }
 
-.jugador:hover {
-  background: rgba(200, 200, 200, 0.3);
-  transform: scale(1.08);
-  border: 2px solid rgba(255, 255, 255, 0.5);
-}
+    .jugador {
+      position: absolute;
+      width: 65px;
+      height: 65px;
+      border-radius: 50%;
+      overflow: visible;
+      background: rgba(200, 200, 200, 0.15);
+      border: 2px solid rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.2s;
+    }
 
-.jugador .numero {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 26px;
-  font-weight: bold;
-}
+    .jugador:hover {
+      background: rgba(200, 200, 200, 0.3);
+      transform: scale(1.08);
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      box-shadow: 0 0 10px rgba(34,197,94,0.5);
+    }
 
-/* EFECTO BOTÓN */
-.jugador:active {
-  transform: scale(0.95);
-}
+    .jugador:active {
+      transform: scale(0.95);
+    }
 
-.jugador:hover {
-  box-shadow: 0 0 10px rgba(34,197,94,0.5);
-}
-.jugador.activo {
-  border: 2px solid #22c55e;
-  box-shadow: 0 0 12px rgba(34,197,94,0.7);
-}
-/* número */
-.nombre {
-  position: absolute;
-  top: 100%; /* lo deja abajo del círculo */
-  left: 50%;
-  transform: translateX(-50%);
-  
-  background: rgba(0, 0, 0, 0.6);
-  padding: 3px 8px;
-  border-radius: 8px;
+    .jugador.activo {
+      border: 2px solid #22c55e;
+      box-shadow: 0 0 12px rgba(34,197,94,0.7);
+    }
 
-  color: white;
-  font-size: 12px;
-  font-weight: bold;
+    .numero {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 26px;
+      font-weight: bold;
+    }
 
-  white-space: nowrap;
-}
+    .foto {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    }
 
-/* buscador */
-.buscador {
-  margin-top: 15px;
-}
+    .nombre {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.6);
+      padding: 3px 8px;
+      border-radius: 8px;
+      color: white;
+      font-size: 12px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
 
+    .buscador {
+      margin-top: 15px;
+    }
 
-input {
-  padding: 10px;
-  border-radius: 8px;
-  border: none;
-  width: 200px;
-}
+    input {
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      width: 200px;
+      outline: none;
+    }
 
-.resultados {
-  background: #111827;
-  margin-top: 5px;
-  border-radius: 8px;
-  max-height: 120px;
-  overflow-y: auto;
-}
+    .resultados {
+      background: #111827;
+      margin: 5px auto 0;
+      border-radius: 8px;
+      max-height: 120px;
+      overflow-y: auto;
+      width: 220px;
+      text-align: left;
+    }
 
-.item {
-  padding: 8px;
-  cursor: pointer;
-}
+    .item {
+      padding: 8px;
+      cursor: pointer;
+    }
 
-.item:hover {
-  background: #1f2937;
-}
+    .item:hover {
+      background: #1f2937;
+    }
 
-.btn-guardar{
-  margin-top: 10px;
-  padding: 10px 20px;
-  background: #00ff88;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-}
-</style>
+    .btn-guardar {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background: #00ff88;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
 </head>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-
-<script>
-
-const supabase = window.supabase.createClient(
-  "https://lbjeleowvbeyxkuradnb.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxiamVsZW93dmJleXhrdXJhZG5iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyOTQxNzEsImV4cCI6MjA5MTg3MDE3MX0.uIbahQCe4xtDVXTiefkUKMMGSD8kSjnRO8C8u7G-aaA"
-);
-
-let equipoSeleccionado = {
-  arquero: null,
-  cierre: null,
-  ala1: null,
-  ala2: null,
-  pivot: null
-};
-
-// ✅ FUNCIÓN BOTÓN
-function guardarEquipo(){
-  alert("FUNCIONA 🔥");
-}
-
-
-</script>
-
 <body>
 
-<div class="container">
+  <div class="container">
+    <h1>Equipo de la Fecha</h1>
 
-  <h1>CIDECO FUTSAL</h1>
-
-  <div class="layout">
-
-    <!-- INFO -->
     <div class="info-partido">
-      <p class="fecha">Primera C futsal</p>
-      <p class="vs">Arma tu quinteto ideal de la fecha</p>
+      <p>Fecha 4</p>
+      <p>vs Villa Modelo</p>
     </div>
 
-    <!-- CANCHA -->
     <div class="cancha">
       <div class="linea"></div>
       <div class="centro"></div>
-
       <div class="area area-top"></div>
       <div class="area area-bottom"></div>
 
-      <!-- jugadores -->
-      <div class="jugador" style="top:20px; left:50%; transform:translateX(-50%)" onclick="selectPos(this)">
+      <div class="jugador" data-pos="arquero" style="top:20px; left:50%; transform:translateX(-50%)" onclick="selectPos(this)">
         <div class="numero">+</div>
       </div>
 
-      <div class="jugador" style="top:150px; left:20px" onclick="selectPos(this)">
+      <div class="jugador" data-pos="ala1" style="top:150px; left:20px" onclick="selectPos(this)">
         <div class="numero">+</div>
       </div>
 
-      <div class="jugador" style="top:150px; right:20px" onclick="selectPos(this)">
+      <div class="jugador" data-pos="ala2" style="top:150px; right:20px" onclick="selectPos(this)">
         <div class="numero">+</div>
       </div>
 
-      <div class="jugador" style="bottom:120px; left:50%; transform:translateX(-50%)" onclick="selectPos(this)">
+      <div class="jugador" data-pos="cierre" style="bottom:120px; left:50%; transform:translateX(-50%)" onclick="selectPos(this)">
         <div class="numero">+</div>
       </div>
 
-      <div class="jugador" style="bottom:20px; left:50%; transform:translateX(-50%)" onclick="selectPos(this)">
+      <div class="jugador" data-pos="pivot" style="bottom:20px; left:50%; transform:translateX(-50%)" onclick="selectPos(this)">
         <div class="numero">+</div>
       </div>
-
     </div>
 
+    <div class="buscador">
+      <input type="text" id="input" placeholder="Buscar jugador..." oninput="buscar()">
+      <div class="resultados" id="resultados"></div>
+    </div>
+
+    <button onclick="guardarEquipo()" class="btn-guardar">
+      Confirmar equipo
+    </button>
   </div>
 
-  <div class="buscador">
-    <input type="text" id="input" placeholder="Buscar jugador..." oninput="buscar()">
-    <div class="resultados" id="resultados"></div>
-  </div>
-<button onclick="guardarEquipo()" class="btn-guardar">
-  Confirmar equipo
-</button>
-</div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script>
+    const supabase = window.supabase.createClient(
+      "https://lbjeleowvbeyxkuradnb.supabase.co",
+      "PONE_ACA_TU_ANON_KEY"
+    );
 
-<script>
-  document.getElementById("input").addEventListener("keydown", function(e){
+    let equipoSeleccionado = {
+      arquero: null,
+      cierre: null,
+      ala1: null,
+      ala2: null,
+      pivot: null
+    };
 
-  const items = document.querySelectorAll(".item");
+    let posicion = null;
+    let posicionActual = null;
+    let seleccionIndex = 0;
 
-  if(e.key === "ArrowDown"){
-    seleccionIndex = Math.min(seleccionIndex + 1, items.length - 1);
-    buscar();
-  }
+    const jugadores = [
+      { nombre: "Jero", apellido: "Barborik", posicion: "ala", img: "img/Barborik.jpg" },
+      { nombre: "Nahuel", apellido: "Marchesi", posicion: "arquero", img: "img/marchesi.jpg" },
+      { nombre: "Federico", apellido: "Garbarino", posicion: "cierre", img: "img/garbarino.jpg" },
+      { nombre: "Diego", apellido: "Clapcich", posicion: "ala", img: "img/clapcich.jpg" },
+      { nombre: "Damian", apellido: "Salazar", posicion: "arquero", img: "img/salazar.jpg" },
+      { nombre: "Luis", apellido: "Velazquez", posicion: "cierre", img: "img/velazquez.jpg" },
+      { nombre: "Mauro", apellido: "Gonzalez", posicion: "cierre", img: "img/gonzalez.jpg" },
+      { nombre: "Cristhoper", apellido: "Silva", posicion: "cierre", img: "img/silva.jpg" },
+      { nombre: "Ezequiel", apellido: "De Marco", posicion: "cierre", img: "img/de marco.jpg" },
+      { nombre: "Fran", apellido: "Laurenzano", posicion: "ala", img: "img/laurenzano.jpg" },
+      { nombre: "Leo", apellido: "Pizzolo", posicion: "ala", img: "img/pizzolo.jpg" },
+      { nombre: "Lucas", apellido: "Goni", posicion: "ala", img: "img/goni.jpg" },
+      { nombre: "Salvador", apellido: "Carabajal", posicion: "ala", img: "img/carabajal.jpg" },
+      { nombre: "Fausto", apellido: "Diaz Conte", posicion: "ala", img: "img/ala.jpg" },
+      { nombre: "Ignacio", apellido: "Peña", posicion: "ala", img: "img/peña.jpg" },
+      { nombre: "Alex", apellido: "Gallardo", posicion: "ala", img: "img/gallardo.jpg" },
+      { nombre: "Manuel", apellido: "Bastos", posicion: "ala", img: "img/bastos.jpg" },
+      { nombre: "Junior", apellido: "Atencio", posicion: "pivot", img: "img/atencio.jpg" },
+      { nombre: "Santiago", apellido: "Romero", posicion: "pivot", img: "img/romero.jpg" },
+      { nombre: "Damian", apellido: "Gonzalez", posicion: "pivot", img: "img/gonzalez 25.jpg" },
+      { nombre: "Luciano", apellido: "Muñoz", posicion: "pivot", img: "img/muñoz.jpg" }
+    ];
 
-  if(e.key === "ArrowUp"){
-    seleccionIndex = Math.max(seleccionIndex - 1, 0);
-    buscar();
-  }
+    document.getElementById("input").addEventListener("keydown", function(e) {
+      const items = document.querySelectorAll(".item");
 
-  if(e.key === "Enter"){
-    if(items[seleccionIndex]){
-      items[seleccionIndex].click();
-    }
-  }
-});
-let posicion = null;
+      if (e.key === "ArrowDown") {
+        seleccionIndex = Math.min(seleccionIndex + 1, items.length - 1);
+        buscar();
+      }
 
-const jugadores = [
-  {
-    nombre: "Jero",
-    apellido: "Barborik",
-    numero: 10,
-    posicion: "ala",
-    img: "img/Barborik.jpg"
-  },
-  {
-    nombre: "Nahuel",
-    apellido: "Marchesi",
-    numero: 23,
-    posicion: "arquero",
-    img: "img/marchesi.jpg"
-  },
-  {
-    nombre: "Federico",
-    apellido: "Garbarino",
-    numero: 5,
-    posicion: "cierre",
-    img: "img/garbarino.jpg"
-  },
-  {
-    nombre: "Diego",
-    apellido: "Clapcich",
-    numero: 22,
-    posicion: "ala",
-    img: "img/clapcich.jpg"
-  },
-  {
-    nombre: "Damian",
-    apellido: "Salazar",
-    numero: 12,
-    posicion: "arquero",
-    img: "img/salazar.jpg"
-  },
-  {
-    nombre: "Luis",
-    apellido: "Velazquez",
-    numero: 3,
-    posicion: "cierre",
-    img: "img/velazquez.jpg"
-  },
-  {
-    nombre: "Mauro",
-    apellido: "Gonzalez",
-    numero: 4,
-    posicion: "cierre",
-    img: "img/gonzalez.jpg"
-  },
-  {
-    nombre: "Cristhoper",
-    apellido: "Silva",
-    numero: 8,
-    posicion: "cierre",
-    img: "img/silva.jpg"
-  },
-  {
-    nombre: "Ezequiel",
-    apellido: "De Marco",
-    numero: 9,
-    posicion: "cierre",
-    img: "img/de marco.jpg"
-  },
-  {
-    nombre: "Fran",
-    apellido: "Laurenzano",
-    numero: 14,
-    posicion: "ala",
-    img: "img/laurenzano.jpg"
-  },
-  {
-    nombre: "Leo",
-    apellido: "Pizzolo",
-    numero: 6,
-    posicion: "ala",
-    img: "img/pizzolo.jpg"
-  },
-  {
-    nombre: "Lucas",
-    apellido: "Goni",
-    numero: 7,
-    posicion: "ala",
-    img: "img/goni.jpg"
-  },
-  {
-    nombre: "Salvador",
-    apellido: "Carabajal",
-    numero: 11,
-    posicion: "ala",
-    img: "img/carabajal.jpg"
-  },
-  {
-    nombre: "Fausto",
-    apellido: "Diaz Conte",
-    numero: 16,
-    posicion: "ala",
-    img: "img/ala.jpg"
-  },
-  {
-    nombre: "Fran",
-    apellido: "Laurenzano",
-    numero: 14,
-    posicion: "ala",
-    img: "img/laurenzano.jpg"
-  },
-  {
-    nombre: "Ignacio",
-    apellido: "Peña",
-    numero: 19,
-    posicion: "ala",
-    img: "img/peña.jpg"
-  },
-  {
-    nombre: "Alex",
-    apellido: "Gallardo",
-    numero: 20,
-    posicion: "ala",
-    img: "img/gallardo.jpg"
-  },
-  {
-    nombre: "Manuel",
-    apellido: "Bastos",
-    numero: 26,
-    posicion: "ala",
-    img: "img/bastos.jpg"
-  },
-  {
-    nombre: "Junior",
-    apellido: "Atencio",
-    numero: 15,
-    posicion: "pivot",
-    img: "img/atencio.jpg"
-  },
-  {
-    nombre: "Santiago",
-    apellido: "Romero",
-    numero: 18,
-    posicion: "pivot",
-    img: "img/romero.jpg"
-  },
-  {
-    nombre: "Damian",
-    apellido: "Gonzalez",
-    numero: 25,
-    posicion: "pivot",
-    img: "img/gonzalez 25.jpg"
-  },
-  {
-    nombre: "Luciano",
-    apellido: "Muñoz",
-    numero: 27,
-    posicion: "pivot",
-    img: "img/muñoz.jpg"
-  }
-];
+      if (e.key === "ArrowUp") {
+        seleccionIndex = Math.max(seleccionIndex - 1, 0);
+        buscar();
+      }
 
-let posicionActual = null;
+      if (e.key === "Enter") {
+        if (items[seleccionIndex]) {
+          items[seleccionIndex].click();
+        }
+      }
+    });
 
-function selectPos(el){
-  document.querySelectorAll(".jugador").forEach(j => j.classList.remove("activo"));
-
-  el.classList.add("activo");
-  posicion = el;
-
-  // 🔥 CLAVE
-  posicionActual = el.getAttribute("data-pos");
-
-  document.getElementById("input").focus();
-}
-let seleccionIndex = 0;
-
-function buscar(){
-  const texto = document.getElementById("input").value.toLowerCase();
-
-  const filtrados = jugadores.filter(j => 
-    (j.nombre + " " + j.apellido).toLowerCase().includes(texto)
-  );
-
-  const resultados = document.getElementById("resultados");
-  resultados.innerHTML = "";
-
-  filtrados.forEach((j, index) => {
-    const div = document.createElement("div");
-    div.className = "item";
-    div.innerText = j.nombre + " " + j.apellido;
-
-    if(index === seleccionIndex){
-      div.style.background = "#1e293b";
+    function selectPos(el) {
+      document.querySelectorAll(".jugador").forEach(j => j.classList.remove("activo"));
+      el.classList.add("activo");
+      posicion = el;
+      posicionActual = el.getAttribute("data-pos");
+      document.getElementById("input").focus();
     }
 
-    div.onclick = () => elegirJugador(j);
+    function buscar() {
+      const texto = document.getElementById("input").value.toLowerCase();
+      const filtrados = jugadores.filter(j =>
+        (j.nombre + " " + j.apellido).toLowerCase().includes(texto)
+      );
 
-    resultados.appendChild(div);
-  });
-}
+      const resultados = document.getElementById("resultados");
+      resultados.innerHTML = "";
 
-function elegirJugador(j){
+      filtrados.forEach((j, index) => {
+        const div = document.createElement("div");
+        div.className = "item";
+        div.innerText = j.nombre + " " + j.apellido;
 
-  if(posicion){
-    posicion.innerHTML = `
-      <img src="${j.img}" class="foto">
-      <div class="nombre">${j.apellido}</div>
-    `;
-  }
+        if (index === seleccionIndex) {
+          div.style.background = "#1e293b";
+        }
 
-  // 🔥 ESTA LÍNEA ES LA NUEVA
-  equipoSeleccionado[posicionActual] = j;
-}
-</script>
+        div.onclick = () => elegirJugador(j);
+        resultados.appendChild(div);
+      });
+    }
 
+    function elegirJugador(j) {
+      if (posicion) {
+        posicion.innerHTML = `
+          <img src="${j.img}" class="foto">
+          <div class="nombre">${j.apellido}</div>
+        `;
+      }
+
+      equipoSeleccionado[posicionActual] = j;
+    }
+
+    async function guardarEquipo() {
+      if (
+        !equipoSeleccionado.arquero ||
+        !equipoSeleccionado.cierre ||
+        !equipoSeleccionado.ala1 ||
+        !equipoSeleccionado.ala2 ||
+        !equipoSeleccionado.pivot
+      ) {
+        alert("Te falta completar el equipo");
+        return;
+      }
+
+      const votos = [
+        { jugador: `${equipoSeleccionado.arquero.nombre} ${equipoSeleccionado.arquero.apellido}`, posicion: "arquero", fecha: 4 },
+        { jugador: `${equipoSeleccionado.cierre.nombre} ${equipoSeleccionado.cierre.apellido}`, posicion: "cierre", fecha: 4 },
+        { jugador: `${equipoSeleccionado.ala1.nombre} ${equipoSeleccionado.ala1.apellido}`, posicion: "ala", fecha: 4 },
+        { jugador: `${equipoSeleccionado.ala2.nombre} ${equipoSeleccionado.ala2.apellido}`, posicion: "ala", fecha: 4 },
+        { jugador: `${equipoSeleccionado.pivot.nombre} ${equipoSeleccionado.pivot.apellido}`, posicion: "pivot", fecha: 4 }
+      ];
+
+      const { error } = await supabase
+        .from("votos")
+        .insert(votos);
+
+      if (error) {
+        console.error(error);
+        alert("Error al guardar");
+      } else {
+        alert("Equipo guardado ✅");
+      }
+    }
+  </script>
 </body>
 </html>
