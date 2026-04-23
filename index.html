@@ -291,8 +291,7 @@ function guardarEquipo(){
 </div>
 
 <script>
-  document.getElementById("input").addEventListener("keydown", function(e){
-
+document.getElementById("input").addEventListener("keydown", function(e){
   const items = document.querySelectorAll(".item");
 
   if(e.key === "ArrowDown"){
@@ -311,7 +310,9 @@ function guardarEquipo(){
     }
   }
 });
+
 let posicion = null;
+let seleccionIndex = 0;
 
 const jugadores = [
   {
@@ -470,20 +471,12 @@ const jugadores = [
   }
 ];
 
-let posicionActual = null;
-
 function selectPos(el){
   document.querySelectorAll(".jugador").forEach(j => j.classList.remove("activo"));
-
   el.classList.add("activo");
   posicion = el;
-
-  // 🔥 CLAVE
-  posicionActual = el.getAttribute("data-pos");
-
   document.getElementById("input").focus();
 }
-let seleccionIndex = 0;
 
 function buscar(){
   const texto = document.getElementById("input").value.toLowerCase();
@@ -511,23 +504,22 @@ function buscar(){
 }
 
 function elegirJugador(j){
-
   if(posicion){
     posicion.innerHTML = `
       <img src="${j.img}" class="foto">
       <div class="nombre">${j.apellido}</div>
     `;
   }
-function guardarEquipo(){
+}
 
+function guardarEquipo(){
   const boton = document.querySelector(".btn-guardar");
 
   boton.innerHTML = "✅ Equipo confirmado";
-
   boton.disabled = true;
-
   boton.style.background = "#22c55e";
   boton.style.color = "white";
+  boton.style.cursor = "default";
 }
 </script>
 
