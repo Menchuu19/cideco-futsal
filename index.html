@@ -267,6 +267,16 @@ input {
     margin: 10px auto 0;
   }
 }
+  .mensaje-confirmado{
+  display: none;
+  margin-bottom: 15px;
+  background: rgba(34,197,94,0.2);
+  border: 1px solid #22c55e;
+  color: #22c55e;
+  padding: 10px;
+  border-radius: 10px;
+  font-weight: bold;
+}
 </style>
 </head>
 <script>
@@ -291,6 +301,7 @@ function reiniciarEquipo(){
 
   document.getElementById("input").value = "";
   document.getElementById("resultados").innerHTML = "";
+  document.getElementById("mensaje-confirmado").style.display = "none";
 }
 
 
@@ -301,7 +312,9 @@ function reiniciarEquipo(){
 <div class="container">
 
   <h1>CIDECO FUTSAL</h1>
-
+   <div id="mensaje-confirmado" class="mensaje-confirmado">
+  ✅ Equipo enviado correctamente
+</div>
   <div class="layout">
 
     <!-- INFO -->
@@ -586,6 +599,7 @@ function guardarEquipo(){
   if(jugadores.length < 5){
     alert("⚠️ Tenés que completar todo el equipo");
     return;
+    document.getElementById("mensaje-confirmado").style.display = "block";
   }
 
   const boton = document.querySelector(".btn-guardar");
