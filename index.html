@@ -215,20 +215,39 @@ input {
   font-weight: bold;
   cursor: pointer;
 }
+  .reset-btn{
+  background: #334155;
+  color: white;
+  margin-left: 10px;
+}
+
+.reset-btn:hover{
+  background: #475569;
+}
 </style>
 </head>
 <script>
 
-function guardarEquipo(){
+function reiniciarEquipo(){
+
+  const jugadores = document.querySelectorAll(".jugador");
+
+  jugadores.forEach(j => {
+    j.innerHTML = `<div class="numero">+</div>`;
+    j.classList.remove("activo");
+  });
 
   const boton = document.querySelector(".btn-guardar");
 
-  boton.innerHTML = "✅ Equipo confirmado";
-  boton.disabled = true;
+  boton.innerHTML = "Confirmar equipo";
+  boton.disabled = false;
 
-  boton.style.background = "#22c55e";
-  boton.style.color = "white";
-  boton.style.cursor = "default";
+  boton.style.background = "#00ff88";
+  boton.style.color = "black";
+  boton.style.cursor = "pointer";
+
+  document.getElementById("input").value = "";
+  document.getElementById("resultados").innerHTML = "";
 }
 
 
@@ -287,6 +306,8 @@ function guardarEquipo(){
   </div>
 <button onclick="guardarEquipo()" class="btn-guardar">
   Confirmar equipo
+<button onclick="reiniciarEquipo()" class="btn-guardar reset-btn">
+  🔄 Reiniciar equipo
 </button>
 </div>
 
