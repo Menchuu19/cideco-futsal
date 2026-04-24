@@ -516,10 +516,19 @@ function elegirJugador(j){
 }
 
 function guardarEquipo(){
+
+  const jugadores = document.querySelectorAll(".foto");
+
+  if(jugadores.length < 5){
+    alert("⚠️ Tenés que completar todo el equipo");
+    return;
+  }
+
   const boton = document.querySelector(".btn-guardar");
 
   boton.innerHTML = "✅ Equipo confirmado";
   boton.disabled = true;
+
   boton.style.background = "#22c55e";
   boton.style.color = "white";
   boton.style.cursor = "default";
