@@ -228,6 +228,45 @@ input {
 .reset-btn:hover{
   background: #475569;
 }
+  @media (max-width: 600px) {
+  body {
+    align-items: flex-start;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .container {
+    padding: 15px 10px;
+  }
+
+  h1 {
+    font-size: 22px;
+  }
+
+  .cancha {
+    width: 300px;
+    height: 500px;
+  }
+
+  .buscador {
+    margin-top: 18px;
+  }
+
+  input {
+    width: 230px;
+  }
+
+  .btn-guardar {
+    margin-top: 10px;
+    width: 230px;
+  }
+
+  .reset-btn {
+    margin-left: 0;
+    display: block;
+    margin: 10px auto 0;
+  }
+}
 </style>
 </head>
 <script>
@@ -559,6 +598,7 @@ function guardarEquipo(){
   boton.style.color = "white";
   boton.style.cursor = "default";
 }
+  
 </script>
 
 </body>
