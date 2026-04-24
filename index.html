@@ -215,6 +215,10 @@ input {
   font-weight: bold;
   cursor: pointer;
 }
+  .btn-guardar:disabled {
+  opacity: 0.9;
+  transform: scale(0.98);
+}
   .reset-btn{
   background: #334155;
   color: white;
@@ -548,6 +552,7 @@ function guardarEquipo(){
   const boton = document.querySelector(".btn-guardar");
 
   boton.innerHTML = "✅ Equipo confirmado";
+  boton.style.boxShadow = "0 0 15px rgba(34,197,94,0.6)";
   boton.disabled = true;
 
   boton.style.background = "#22c55e";
