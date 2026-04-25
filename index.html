@@ -87,6 +87,7 @@ h1 {
   height: 100%;
   border-radius: 50%; /* 👈 lo hace círculo */
   object-fit: cover;  /* 👈 recorta bien la imagen */
+  animation: aparecer 0.25s ease;
 }
 
 /* línea mitad */
@@ -276,6 +277,17 @@ input {
   padding: 10px;
   border-radius: 10px;
   font-weight: bold;
+}
+  @keyframes aparecer {
+  from {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 </style>
 </head>
