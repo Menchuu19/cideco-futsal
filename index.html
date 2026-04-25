@@ -307,7 +307,11 @@ const supa = window.supabase.createClient(
 );
 
 async function probarSupabase(){
-
+ 
+  if(localStorage.getItem("yaVotoFecha4") === "si"){
+  alert("Ya votaste en esta fecha ✅");
+  return;
+}
   const jugadores = document.querySelectorAll(".jugador");
 
   const datos = [];
@@ -334,6 +338,7 @@ async function probarSupabase(){
 
   if(error){
     console.log(error);
+    localStorage.setItem("yaVotoFecha4", "si");
     alert("Error guardando votos");
   } else {
     alert("Voto enviado ✅");
