@@ -304,6 +304,24 @@ input {
     opacity: 1;
   }
 }
+  .ranking-box{
+  margin-top: 20px;
+  background: rgba(0,0,0,0.5);
+  padding: 15px;
+  border-radius: 12px;
+  color: white;
+  width: 230px;
+  text-align: left;
+}
+
+.ranking-box h3{
+  margin-top: 10px;
+  color: #22c55e;
+}
+
+.ranking-box p{
+  margin: 5px 0;
+}
 </style>
 </head>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
@@ -364,12 +382,49 @@ async function verRanking(){
 
   if(error){
     console.log(error);
-    alert("Error cargando ranking");
     return;
   }
 
-  console.log("VOTOS:", data);
-  alert("Ranking cargado, mirá la consola");
+  const ranking = {};
+
+  data.forEach(v => {
+
+    const clave = v.posicion + "-" + v.jugador;
+
+    if(!ranking[clave]){
+      ranking[clave] = {
+        jugador: v.jugador,
+        posicion: v.posicion,
+        votos: 0
+      };
+    }
+
+    ranking[clave].votos++;
+
+  });
+
+  const lista = Object.values(ranking);
+
+  lista.sort((a,b) => b.votos - a.votos);
+
+  let html = "<h2>🏆 Ranking</h2>";
+
+  ["arquero","cierre","ala","pivot"].forEach(pos => {
+
+    html += `<h3>${pos.toUpperCase()}</h3>`;
+
+    lista
+      .filter(j => j.posicion === pos)
+      .forEach(j => {
+
+        html += `<p>${j.jugador} - ${j.votos} votos</p>`;
+
+      });
+
+  });
+
+  document.getElementById("ranking").innerHTML = html;
+
 }
 </script>
 <script>
@@ -465,7 +520,7 @@ function reiniciarEquipo(){
   📊 Ver ranking
 </button>
 </div>
-
+<div id="ranking" class="ranking-box"></div>
 <script>
 document.getElementById("input").addEventListener("keydown", function(e){
   const items = document.querySelectorAll(".item");
