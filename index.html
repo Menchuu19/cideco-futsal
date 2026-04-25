@@ -403,13 +403,13 @@ async function verRanking(){
 
   if(error){
     console.log(error);
+    alert("Error cargando ranking");
     return;
   }
 
   const ranking = {};
 
   data.forEach(v => {
-
     const clave = v.posicion + "-" + v.jugador;
 
     if(!ranking[clave]){
@@ -421,31 +421,29 @@ async function verRanking(){
     }
 
     ranking[clave].votos++;
-
   });
 
   const lista = Object.values(ranking);
 
-  lista.sort((a,b) => b.votos - a.votos);
-
   let html = "<h2>🏆 Ranking</h2>";
 
   ["arquero","cierre","ala","pivot"].forEach(pos => {
+    const jugadoresPos = lista
+      .filter(j => j.posicion === pos)
+      .sort((a,b) => b.votos - a.votos);
+
+    const totalPosicion = jugadoresPos.reduce((acc, j) => acc + j.votos, 0);
 
     html += `<h3>${pos.toUpperCase()}</h3>`;
 
-    lista
-      .filter(j => j.posicion === pos)
-      .forEach(j => {
+    jugadoresPos.forEach(j => {
+      const porcentaje = Math.round((j.votos / totalPosicion) * 100);
 
-        html += `<p>${j.jugador} - ${j.votos} votos</p>`;
-
-      });
-
+      html += `<p>${j.jugador} - ${j.votos} votos (${porcentaje}%)</p>`;
+    });
   });
 
   document.getElementById("ranking").innerHTML = html;
-
 }
 </script>
 <script>
