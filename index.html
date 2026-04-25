@@ -302,6 +302,9 @@ function reiniciarEquipo(){
   document.getElementById("input").value = "";
   document.getElementById("resultados").innerHTML = "";
   document.getElementById("mensaje-confirmado").style.display = "none";
+  document.querySelectorAll(".jugador").forEach(j => {
+  j.style.pointerEvents = "auto";
+});
 }
 
 
@@ -604,6 +607,9 @@ function guardarEquipo(){
   boton.style.background = "#22c55e";
   boton.style.color = "white";
   boton.style.cursor = "default";
+  document.querySelectorAll(".jugador").forEach(j => {
+  j.style.pointerEvents = "none";
+});
 }
   
 </script>
