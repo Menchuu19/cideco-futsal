@@ -427,6 +427,26 @@ async function verRanking(){
 
   let html = "<h2>🏆 Ranking</h2>";
 
+  const getTop = (pos, cantidad = 1) => {
+    return lista
+      .filter(j => j.posicion === pos)
+      .sort((a,b) => b.votos - a.votos)
+      .slice(0, cantidad);
+  };
+
+  const equipoIdeal = [
+    ...getTop("arquero", 1),
+    ...getTop("cierre", 1),
+    ...getTop("ala", 2),
+    ...getTop("pivot", 1)
+  ];
+
+  html += "<h3>⭐ EQUIPO IDEAL ACTUAL</h3>";
+
+  equipoIdeal.forEach(j => {
+    html += `<p>${j.posicion.toUpperCase()}: ${j.jugador}</p>`;
+  });
+
   ["arquero","cierre","ala","pivot"].forEach(pos => {
     const jugadoresPos = lista
       .filter(j => j.posicion === pos)
@@ -438,7 +458,6 @@ async function verRanking(){
 
     jugadoresPos.forEach(j => {
       const porcentaje = Math.round((j.votos / totalPosicion) * 100);
-
       html += `<p>${j.jugador} - ${j.votos} votos (${porcentaje}%)</p>`;
     });
   });
