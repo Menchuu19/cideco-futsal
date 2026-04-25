@@ -418,10 +418,13 @@ async function probarSupabase(){
 }
 async function verRanking(){
 
-  const { data, error } = await supa
-    .from("VOTOS")
-    .select("*")
-    .eq("fecha", 4);
+  const hace24hs = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+
+const { data, error } = await supa
+  .from("VOTOS")
+  .select("*")
+  .eq("fecha", 4)
+  .gte("created_at", hace24hs);
 
   if(error){
     console.log(error);
