@@ -308,22 +308,37 @@ const supa = window.supabase.createClient(
 
 async function probarSupabase(){
 
+  const jugadores = document.querySelectorAll(".jugador");
+
+  const datos = [];
+
+  jugadores.forEach((j, index) => {
+
+    const nombre = j.querySelector(".nombre");
+
+    if(nombre){
+
+      datos.push({
+        jugador: nombre.innerText,
+        posicion: index + 1,
+        fecha: 4
+      });
+
+    }
+
+  });
+
   const { error } = await supa
     .from("VOTOS")
-    .insert([
-      {
-        jugador: "TEST",
-        posicion: "prueba",
-        fecha: 5
-      }
-    ]);
+    .insert(datos);
 
   if(error){
     console.log(error);
-    alert("Error Supabase");
+    alert("Error guardando votos");
   } else {
-    alert("Supabase funciona ✅");
+    alert("Voto enviado ✅");
   }
+
 }
 
 </script>
