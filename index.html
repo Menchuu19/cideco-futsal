@@ -297,6 +297,36 @@ input {
 }
 </style>
 </head>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+<script>
+
+const supabase = window.supabase.createClient(
+  "https://lbjeleowvbeyxkuradnb.supabase.co",
+  "TU_ANON_KEY"
+);
+
+async function probarSupabase(){
+
+  const { error } = await supabase
+    .from("votos")
+    .insert([
+      {
+        jugador: "TEST",
+        posicion: "prueba",
+        fecha: 5
+      }
+    ]);
+
+  if(error){
+    console.log(error);
+    alert("Error Supabase");
+  } else {
+    alert("Supabase funciona ✅");
+  }
+}
+
+</script>
 <script>
 
 function reiniciarEquipo(){
