@@ -378,11 +378,16 @@ const supa = window.supabase.createClient(
 
 async function probarSupabase(){
  
-  if(localStorage.getItem("yaVotoFecha4") === "si"){
+const ultimoVoto = localStorage.getItem("ultimoVotoFecha4");
+const ahora = Date.now();
+const duracion24hs = 24 * 60 * 60 * 1000;
+
+if(ultimoVoto && ahora - Number(ultimoVoto) < duracion24hs){
   alert("Ya votaste en esta fecha ✅");
   return;
 }
-  localStorage.setItem("yaVotoFecha4", "si");
+
+localStorage.setItem("ultimoVotoFecha4", ahora);
   const jugadores = document.querySelectorAll(".jugador");
 
   const datos = [];
