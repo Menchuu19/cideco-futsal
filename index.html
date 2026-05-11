@@ -533,6 +533,49 @@ const { data, error } = await supa
 
   document.getElementById("ranking").innerHTML = html;
 }
+  async function verRankingTorneo(){
+
+  const { data, error } = await supa
+    .from("VOTOS")
+    .select("*");
+
+  if(error){
+    console.log(error);
+    alert("Error cargando ranking");
+    return;
+  }
+
+  const ranking = {};
+
+  data.forEach(v => {
+
+    const clave = v.jugador;
+
+    if(!ranking[clave]){
+      ranking[clave] = 0;
+    }
+
+    ranking[clave]++;
+  });
+
+  const jugadores = Object.entries(ranking)
+    .sort((a,b) => b[1] - a[1]);
+
+  let html = `
+    <h2>🏆 Ranking del torneo</h2>
+  `;
+
+  jugadores.forEach((j, index) => {
+
+    html += `
+      <p>
+        ${index + 1}. ${j[0]} - ${j[1]} votos
+      </p>
+    `;
+  });
+
+  document.getElementById("ranking").innerHTML = html;
+}
 </script>
 <script>
 
