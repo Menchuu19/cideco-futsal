@@ -365,6 +365,16 @@ input {
   background: #22c55e;
   border-radius: 10px;
 }
+  .cancha-ideal{
+  display: none;
+  margin-top: 20px;
+  transform: scale(0.85);
+  transform-origin: top center;
+}
+
+.cancha-ideal .jugador{
+  pointer-events: none;
+}
 </style>
 </head>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
@@ -470,7 +480,8 @@ const { data, error } = await supa
     ...getTop("ala", 2),
     ...getTop("pivot", 1)
   ];
-
+mostrarCanchaIdeal(equipoIdeal);
+  
   html += "<h3>⭐ EQUIPO IDEAL ACTUAL</h3>";
 
   equipoIdeal.forEach(j => {
@@ -500,6 +511,9 @@ const { data, error } = await supa
   });
 
   document.getElementById("ranking").innerHTML = html;
+}
+  function buscarJugadorPorApellido(apellido){
+  return jugadores.find(j => j.apellido === apellido);
 }
   async function verHistoricoFechas(){
 
@@ -604,6 +618,32 @@ function reiniciarEquipo(){
   j.style.pointerEvents = "auto";
 });
 }
+  function ponerJugadorIdeal(clase, jugadorRanking){
+  const lugar = document.querySelector(clase);
+
+  if(!jugadorRanking || !lugar) return;
+
+  const jugadorReal = jugadores.find(j => j.apellido === jugadorRanking.jugador);
+
+  lugar.innerHTML = `
+    <img src="${jugadorReal ? jugadorReal.img : ''}" class="foto">
+    <div class="nombre">${jugadorRanking.jugador}</div>
+  `;
+}
+
+function mostrarCanchaIdeal(equipoIdeal){
+
+  document.getElementById("cancha-ideal").style.display = "block";
+
+  ponerJugadorIdeal(".ideal-arquero", equipoIdeal.find(j => j.posicion === "arquero"));
+  ponerJugadorIdeal(".ideal-cierre", equipoIdeal.find(j => j.posicion === "cierre"));
+
+  const alas = equipoIdeal.filter(j => j.posicion === "ala");
+  ponerJugadorIdeal(".ideal-ala1", alas[0]);
+  ponerJugadorIdeal(".ideal-ala2", alas[1]);
+
+  ponerJugadorIdeal(".ideal-pivot", equipoIdeal.find(j => j.posicion === "pivot"));
+}
 </script>
 
 <body>
@@ -653,6 +693,18 @@ function reiniciarEquipo(){
 
     </div>
    <div id="ranking" class="ranking-box"></div>
+    <div id="cancha-ideal" class="cancha cancha-ideal">
+  <div class="linea"></div>
+  <div class="centro"></div>
+  <div class="area area-top"></div>
+  <div class="area area-bottom"></div>
+
+  <div class="jugador ideal-pivot" style="top:20px; left:50%; transform:translateX(-50%)"></div>
+  <div class="jugador ideal-ala1" style="top:150px; left:20px"></div>
+  <div class="jugador ideal-ala2" style="top:150px; right:20px"></div>
+  <div class="jugador ideal-cierre" style="bottom:120px; left:50%; transform:translateX(-50%)"></div>
+  <div class="jugador ideal-arquero" style="bottom:20px; left:50%; transform:translateX(-50%)"></div>
+</div>
   </div>
 
   <div class="buscador">
