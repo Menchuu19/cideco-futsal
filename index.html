@@ -375,7 +375,7 @@ const supa = window.supabase.createClient(
   "https://lbjeleowvbeyxkuradnb.supabase.co",
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxiamVsZW93dmJleXhrdXJhZG5iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyOTQxNzEsImV4cCI6MjA5MTg3MDE3MX0.uIbahQCe4xtDVXTiefkUKMMGSD8kSjnRO8C8u7G-aaA"
 );
-
+const fechaActual = 7;
 async function probarSupabase(){
  
 const ultimoVoto = localStorage.getItem("ultimoVotoFecha4");
@@ -401,7 +401,7 @@ localStorage.setItem("ultimoVotoFecha4", ahora);
       datos.push({
         jugador: nombre.innerText,
         posicion: j.dataset.pos,
-        fecha: 4
+        fecha: fechaActual
       });
 
     }
@@ -428,7 +428,7 @@ async function verRanking(){
 const { data, error } = await supa
   .from("VOTOS")
   .select("*")
-  .eq("fecha", 4)
+  .eq("fecha", fechaActual)
   .gte("created_at", hace24hs);
 
   if(error){
@@ -593,6 +593,13 @@ function reiniciarEquipo(){
 </button>
   <button onclick="verRanking()" class="btn-guardar ranking-btn">
   📊 Ver ranking
+    <button onclick="verHistoricoFechas()" class="btn-guardar ranking-btn">
+  📅 Histórico de fechas
+</button>
+
+<button onclick="verRankingTorneo()" class="btn-guardar ranking-btn">
+  🏆 Ranking del torneo
+</button>
 </button>
 </div>
 <script>
